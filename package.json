@@ -1,0 +1,26 @@
+{
+  "name": "amigoinvisible",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "node dev.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arkanyan/Amigo-invisible.git"
+  },
+  "author": "Agustin Rafanelli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Arkanyan/Amigo-invisible/issues"
+  },
+  "homepage": "https://github.com/Arkanyan/Amigo-invisible#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "handlebar": "^1.0.0",
+    "handlebars": "^4.0.11"
+  }
+}
