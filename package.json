@@ -1,26 +1,28 @@
 {
   "name": "amigoinvisible",
   "version": "1.0.0",
-  "description": "",
+  "description": "Pagina para jugar al amigo invisible",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "node dev.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Arkanyan/Amigo-invisible.git"
-  },
-  "author": "Agustin Rafanelli",
+  "author": "Arkanyan",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Arkanyan/Amigo-invisible/issues"
-  },
-  "homepage": "https://github.com/Arkanyan/Amigo-invisible#readme",
   "dependencies": {
-    "express": "^4.16.2",
-    "handlebar": "^1.0.0",
-    "handlebars": "^4.0.11"
+    "bcryptjs": "*",
+    "body-parser": "*",
+    "connect-flash": "*",
+    "cookie-parser": "^1.4.1",
+    "express": "*",
+    "express-handlebars": "*",
+    "express-messages": "*",
+    "express-session": "*",
+    "express-validator": "*",
+    "mongodb": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-http": "*",
+    "passport-local": "*"
   }
 }
