@@ -1,7 +1,27 @@
-<form action="/contact/submitporget">
-	<input type="text" name="username" placeholder="Nombre de usuario" id="username"><br>
-	<input type="email" name="email" placeholder="ejemplo@mail.com" id="email"><br>
-	<input type="password" name="password" placeholder="Contraseña" id="password"><br>
-	<input type="password" name="password2" placeholder="Repetir Contraseña" id="repasword"><br>
-	<button type="button" name="register" id="registro">Registrarte</button>
+<h2>Registro</h2>
+{{#if errors}}
+  {{#each errors}}
+    <div>{{msg}}</div>
+  {{/each}}
+{{else}}
+
+{{/if}}
+<form method="post" action="/registration">
+  <div>
+    <label>Nombre de usuario</label>
+    <input type="text" placeholder="Nombre de usuario" name="username">
+  </div>
+   <div>
+    <label>Email</label>
+    <input type="email" placeholder="Email" name="email">
+  </div>
+  <div>
+    <label>Contraseña</label>
+    <input type="password" placeholder="Contraseña" name="password">
+  </div>
+  <div>
+    <label>Confirmar Contraseña</label>
+    <input type="password" placeholder="Confirmar Contraseña" name="password2">
+  </div>
+  <button type="submit">Registrarme</button>
 </form>

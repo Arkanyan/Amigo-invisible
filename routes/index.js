@@ -12,13 +12,5 @@ router.get('/mensajes', function (req, res){
 router.get('/perfil', function (req, res){
 		res.render('perfil', { selected: { mensajes: true}})
 	});
-/*
-router.get('/login', function (req, res) {
-    res.render('login')
-	});
 
-router.get('/registration', function (req, res) {
-    res.render('registration')
-	});
-*/
 module.exports = router;

@@ -1,5 +1,19 @@
-<form>
-	<input type="text" name="username" placeholder="Nombre de usuario" id="username"><br>
-	<input type="password" name="password" placeholder="Password" id="password"><br>
-	<button type="button" name="login" onclick="getInfo()" id="Iniciar sesion">Iniciar sesion</button>
+<h2>Login</h2>
+{{#if errors}}
+  {{#each errors}}
+    <div>{{msg}}</div>
+  {{/each}}
+{{else}}
+	
+{{/if}}
+<form method="post" action="/login">
+  <div>
+    <label>Nombre de usuario</label>
+    <input type="text" name="username" placeholder="Nombre de usuario">
+  </div>
+  <div>
+    <label>Contraseña</label>
+    <input type="password" name="password" placeholder="Contraseña">
+  </div>
+  <button type="submit" >Iniciar sesion</button>
 </form>
