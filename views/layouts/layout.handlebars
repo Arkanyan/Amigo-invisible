@@ -15,12 +15,12 @@
 			<ul>
 				{{#if user}}
 				<li><a href="/">Home</a></li>
-				<li><a href="perfil">Perfil</a></li>
+				<li><a href="perfil">{{user.username}}</a></li>
 				<li><a href="mensajes">Mensajes</a></li>
 				<li><a href="logout">Desconectarte</a></li>
 				{{else}}
 				<li><a href="login">Iniciar Sesión</a></li>
-				<li><a href="registration">Registrarte</a></li>
+				<li><a href="register">Registrarte</a></li>
 				{{/if}}
 			</ul>
 		</nav>

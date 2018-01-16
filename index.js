@@ -10,26 +10,23 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+// var nodemailer = require('nodemailer')
 
 mongoose.connect('mongodb://localhost/amigoInvisible');
 var db = mongoose.connection;
 
-var app = express();
-
-//Router
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-app.use('/', routes);
-app.use('/', users);
+var app = express();
 
-//Static
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
-//View Engine
-app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
+// View Engine
+app.set('views', path.join(__dirname, 'views'));
+app.engine('handlebars', exphbs({defaultLayout:'layout'}));
 app.set('view engine', 'handlebars');
-
 
 // BodyParser Middleware
 app.use(bodyParser.json());
@@ -46,8 +43,6 @@ app.use(session({
 // Passport init
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(flash());
 
 // Express Validator
 app.use(expressValidator({
@@ -67,6 +62,9 @@ app.use(expressValidator({
   }
 }));
 
+// Connect Flash
+app.use(flash());
+
 // Global Vars
 app.use(function (req, res, next) {
   res.locals.success_msg = req.flash('success_msg');
@@ -76,5 +74,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-//Set Port
+
+app.use('/', routes);
+app.use('/', users);
+
+// Port
 app.listen(3000)

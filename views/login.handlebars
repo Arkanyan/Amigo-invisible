@@ -1,19 +1,12 @@
-<h2>Login</h2>
-{{#if errors}}
-  {{#each errors}}
-    <div>{{msg}}</div>
-  {{/each}}
-{{else}}
-	
-{{/if}}
+<h2>Account Login</h2>
 <form method="post" action="/login">
   <div>
-    <label>Nombre de usuario</label>
-    <input type="text" name="username" placeholder="Nombre de usuario">
+    <label>Username</label>
+    <input type="text" name="username" placeholder="Username">
   </div>
   <div>
-    <label>Contraseña</label>
-    <input type="password" name="password" placeholder="Contraseña">
+    <label>Password</label>
+    <input type="password" name="password" placeholder="Password">
   </div>
-  <button type="submit" >Iniciar sesion</button>
+  <button type="submit" class="btn btn-default">Submit</button>
 </form>
