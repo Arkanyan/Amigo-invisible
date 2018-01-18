@@ -1,50 +1,74 @@
-function sendEmail(
-    parentCallback,
-    fromEmail,
-    toEmails,
-    subject,
-    textContent,
-    htmlContent
-  ) {
-    const errorEmails = [];
-    const successfulEmails = [];
-     const sg = require('sendgrid')   ('__YOUR_APIKEY_CREATED_ON_SENDGRID__');
-     async.parallel([
-      function(callback) {
-        // Add to emails
-        for (let i = 0; i < toEmails.length; i += 1) {
-          // Add from emails
-          const senderEmail = new helper.Email(fromEmail);
-          // Add to email
-          const toEmail = new helper.Email(toEmails[i]);
-          // HTML Content
-          const content = new helper.Content('text/html', htmlContent);
-          const mail = new helper.Mail(senderEmail, subject, toEmail, content);
-          var request = sg.emptyRequest({
-            method: 'POST',
-            path: '/v3/mail/send',
-            body: mail.toJSON()
-          });
-          sg.API(request, function (error, response) {
-            console.log('SendGrid');
-            if (error) {
-              console.log('Error response received');
-            }
-            console.log(response.statusCode);
-            console.log(response.body);
-            console.log(response.headers);
-          });
-        }
-        // return
-        callback(null, true);
-      }
-    ], function(err, results) {
+const express = require('express');
+const router = express.Router();
+var helper = require('sendgrid').mail;
+const async = require('async');
+const sg = require('sendgrid')('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'); 
+
+router.get('/mensaje/enviar', function (req, res, next) {
+
+	// Sendgrid Mailer
+	function sendEmail(fromEmail, toEmails, subject, textContent, htmlContent) {
+  const errorEmails = [];
+  const successfulEmails = [];
+  
+  async.parallel([
+    function(callback) {
+      const senderEmail = new helper.Email(fromEmail);
+      const toEmail = new helper.Email(toEmails);
+      const content = new helper.Content('text/html', htmlContent);
+      const mail = new helper.Mail(senderEmail, subject, toEmail, content);
+      var request = sg.emptyRequest({
+        method: 'POST',
+        path: '/v3/mail/send',
+        body: mail.toJSON()
+      });
+      sg.API(request, function (error, response) {
+        console.log('SendGrid');
+        if (error) {
+        	console.log(error);
+			  	req.flash('error_msg', 'Error al enviar el mensaje');
+	 				res.redirect('/mensajes');
+			  } else{
+  			  	req.flash('success_msg', 'mensaje enviado');
+    		  	res.redirect('/mensajes');
+  	        console.log(response.statusCode);
+  	        console.log(response.body);
+  	        console.log(response.headers);
+          }
+        });  
+      callback(null, true)
+    }], 
+
+    function(err, results) {
       console.log('Done');
-    });
-    parentCallback(null,
-      {
-        successfulEmails: successfulEmails,
-        errorEmails: errorEmails,
-      }
-    );
-}
+    }); 
+  }
+
+  var emailMsg = `
+    <h3>Tienes un nuevo mensaje de tu Amigo Invisible<h3><br>
+    <p>${req.body.emailMsg}<p>
+  `;
+
+  async.parallel([
+    function (callback) {
+      sendEmail(
+        'WebAmigoInvisible@hotmail.com',
+        'agustinrafa1995@hotmail.com',
+        'Nuevo mensaje de tu Amigo Invisible',
+        'Text Content',
+        emailMsg
+      );
+    }],
+    function(err, results) {
+      
+      console.log({
+        success: true,
+        message: 'Emails sent',
+        successfulEmails: results[0].successfulEmails,
+        errorEmails: results[0].errorEmails,
+  		});
+   	}
+  );
+});
+
+module.exports = router;

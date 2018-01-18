@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
+mongoose.connect('mongodb://localhost/amigoInvisible');
+var db = mongoose.connection;
 
 // User Schema
 var UserSchema = mongoose.Schema({
@@ -12,6 +14,9 @@ var UserSchema = mongoose.Schema({
 	},
 	email: {
 		type: String
+	},
+	participant: {
+		type: Boolean
 	},
 });
 
@@ -41,3 +46,4 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     	callback(null, isMatch);
 	});
 }
+

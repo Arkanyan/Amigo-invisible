@@ -5,12 +5,10 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../modulos/user');
 
-// Register
 router.get('/register', function(req, res){
 	res.render('register');
 });
 
-// Login
 router.get('/login', function(req, res){
 	res.render('login');
 });
@@ -35,11 +33,12 @@ router.post('/register', function(req, res){
 		res.render('register',{
 			errors:errors
 		});
-	} else {
+	} else{
 		var newUser = new User({
 			email:email,
 			username: username,
-			password: password
+			password: password,
+			participant: false
 		});
 
 		User.createUser(newUser, function(err, user){
@@ -47,7 +46,7 @@ router.post('/register', function(req, res){
 			console.log(user);
 		});
 
-		req.flash('success_msg', 'Felisidades, ya estas registrado');
+		req.flash('success_msg', 'Felicidades, ya estas registrado');
 
 		res.redirect('/login');
 	}
@@ -55,18 +54,19 @@ router.post('/register', function(req, res){
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-   User.getUserByUsername(username, function(err, user){
-   	if(err) throw err;
-   	if(!user){
-   		return done(null, false, {message: 'Usuario incorrecto'});
-   	}
+
+   	User.getUserByUsername(username, function(err, user){
+	   	if(err) throw err;
+	   	if(!user){
+	   		return done(null, false, {message: 'Usuario incorrecto'});
+	   	}
 
    	User.comparePassword(password, user.password, function(err, isMatch){
    		if(err) throw err;
    		if(isMatch){
    			return done(null, user);
    		} else {
-   			return done(null, false, {message: 'Contraseña incorrecta'});
+   				return done(null, false, {message: 'Contraseña incorrecta'});
    			}
    	});
   });
@@ -82,7 +82,7 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-//Logout
+// Logout
 router.post('/login',
   passport.authenticate('local', {successRedirect:'/', failureRedirect:'/login',failureFlash: true}),
   function(req, res) {

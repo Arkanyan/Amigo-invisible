@@ -10,16 +10,13 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
-// var nodemailer = require('nodemailer')
 
 mongoose.connect('mongodb://localhost/amigoInvisible');
 var db = mongoose.connection;
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
 var app = express();
+
+
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -74,9 +71,14 @@ app.use(function (req, res, next) {
   next();
 });
 
+// Router
+var routes = require('./routes/index');
+var users = require('./routes/users');
+var mailer = require('./routes/mailer');
 
 app.use('/', routes);
 app.use('/', users);
+app.use('/', mailer);
 
 // Port
 app.listen(3000)
