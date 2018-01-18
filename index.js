@@ -80,5 +80,7 @@ app.use('/', routes);
 app.use('/', users);
 app.use('/', mailer);
 
+var sorteo = require('./public/js/sorteo');
+
 // Port
 app.listen(3000)

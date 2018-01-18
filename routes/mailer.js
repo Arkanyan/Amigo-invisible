@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 var helper = require('sendgrid').mail;
 const async = require('async');
-const sg = require('sendgrid')('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'); 
+const sg = require('sendgrid')(''); 
 
 router.get('/mensaje/enviar', function (req, res, next) {
 
